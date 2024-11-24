@@ -1,0 +1,361 @@
+/* Conteneur principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+/* Titre principal */
+h1 {
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Mise en page principale */
+.app-layout {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Section de gauche pour participants, boutons, cartes et résultats */
+.left-section {
+    flex: 2;
+    margin-right: 20px;
+}
+
+/* Participants */
+.participants h4 {
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Grille des participants */
+.participant-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.participant {
+    text-align: center;
+    width: 70px;
+    display: flex; /* Active Flexbox */
+    flex-direction: column; /* Empile les enfants verticalement */
+    justify-content: center; /* Centre verticalement les éléments */
+    align-items: center; /* Centre horizontalement les éléments */
+    border : 1px;
+}
+
+/* Style pour l'avatar */
+.avatar-placeholder {
+    width: 50px;
+    height: 50px;
+    background-color: #d3d3d3;
+    border-radius: 50%; /* Rend l'avatar circulaire */
+    display: block; /* Assure que l'avatar est une boîte bloc */
+    cursor: pointer;
+    margin: 0 auto;
+    border : 1px;
+}
+
+.avatar-selection {
+    border: 2px solid #007bff;
+    background-color: #d3f4ff;
+}
+
+
+.avatar-placeholder: hover{
+    background-color: #007bff;
+}
+
+.avatar-selection{
+    background-color : #00FF00;
+}
+/* Style pour le nom du participant */
+.participant-name {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #007bff;
+    font-weight: bold;
+    text-align: center;
+    border : 1px;
+}
+.participant-card {
+    background-color: #d3d3d3;
+    padding: 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Cadre de vote */
+.vote-frame {
+    margin-top: 10px;
+    text-align: center;
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 60px;
+}
+
+/* Style pour afficher un vote (visible une fois qu'un participant a voté) */
+.vote-value {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #d3d3d3;
+    padding: 5px;
+    border-radius: 5px;
+    width: 50px;
+    cursor: not-allowed;
+}
+
+/* Style pour les boutons de vote avant qu'un participant n'ait voté */
+.vote-placeholder {
+    font-size: 14px;
+    color: #888;
+    background-color: #e0e0e0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Apparence de l'avatar sélectionné */
+.avatar-selection {
+    background-color: #00FF00;
+}
+
+
+/* Cartes de vote */
+.vote-cards {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.vote-card {
+    background-color: #d3d3d3;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.vote-card:hover {
+    background-color: #b3b3b3;
+}
+
+/* Boutons d'action */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 150px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Résultats */
+.results {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 30px;
+}
+
+/* Barre latérale droite */
+.sidebar {
+    flex: 1;
+    border-left: 2px solid #ddd;
+    padding-left: 20px;
+}
+
+.sidebar h3 {
+    color: #343a40;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.btn-feature {
+    background-color: #d3d3d3;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    flex-grow: 1;
+}
+
+.btn-feature:hover {
+    background-color: #b3b3b3;
+}
+
+.status-icon {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+/* Modale pour les détails de la fonctionnalité */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+}
+
+.modal-content h3 {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    color: #555555;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.modal-content .close:hover {
+    color: #000;
+}
+
+/* Style de la section des options PO */
+.po-options {
+    margin-top: 20px;
+}
+
+.po-options h3 {
+    font-size: 1.2em;
+    text-align: center;
+    color: #343a40;
+    font-weight: bold;
+}
+
+/* Liste et éléments pour les options PO */
+.po-option-list {
+    list-style: none;
+    padding: 0;
+}
+
+.po-option-item {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.po-button {
+    display: block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.po-button:hover {
+    color: white;
+    background-color: #0056b3;
+    text-decoration: none;
+}
+
+
+.mod a {
+    text-decoration: none;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    color: black;
+  }
+  .modall {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0; right: 0;
+    bottom: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all .4s;
+  }
+
+  .modall:target {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .modal_content {
+    border-radius: 4px;
+    position: relative;
+    width: 500px;
+    max-width: 90%;
+    background: white;
+    padding: 1.5em 2em;
+  }
+  
+  .modal_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: grey;
+    text-decoration: none;
+  }
+
+ 
