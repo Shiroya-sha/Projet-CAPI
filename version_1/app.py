@@ -32,7 +32,7 @@ app.config['SERVER_NAME'] = '127.0.0.1:5000'
 # liste des participants
 #participants = []
 
-fonctionnalites = []  # Sera chargé depuis backlog.json dans une version complète
+fonctionnalites = []  #   Sera chargé depuis backlog.json dans une version complète
 
 @app.after_request
 def add_header(response):
