@@ -1,0 +1,9 @@
+/version_2/*.*
+/version_3/*.*
+*.json
+/__pycache__
+/version_1 copy
+*.pyc
+/.pytest_cache
+/venv
+
