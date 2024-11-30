@@ -31,4 +31,8 @@ jobs:
 
     - name: Run tests
       run: |
+<<<<<<< HEAD
         pytest
+=======
+        pytest
+>>>>>>> 7b749342cb5950af533efc489f6215b9e435e12d
