@@ -5,4 +5,5 @@
 /version_1 copy
 *.pyc
 /.pytest_cache
+/venv
 
