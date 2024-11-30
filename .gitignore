@@ -1,0 +1,11 @@
+/version_2/*.*
+/version_3/*.*
+/version_1/*.*
+*.json
+/__pycache__
+/version_1 copy
+*.pyc
+/.pytest_cache
+/venv
+
+
