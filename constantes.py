@@ -16,7 +16,11 @@ PARTICIPANTS_AUTORISES = ["PO", "SM", "lina", "hugo"]
 VOTANT = 'VOTANT'  # Votant régulier
 
 # Modes de vote
+<<<<<<< HEAD
 VOTE_STRICT = 'strict'  # Unanimité
+=======
+VOTE_UNANIMITE = 'unanimite'  # Unanimité
+>>>>>>> 2908ac5 (Ajout PO)
 VOTE_MOYENNE = 'moyenne'  # Moyenne des votes
 
 # Statuts des fonctionnalités
