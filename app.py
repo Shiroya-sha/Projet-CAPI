@@ -1,13 +1,13 @@
 # Point d'entrée de l'application Flask
 '''
- le fichier principal l'application Flask. 
- **Ce fichier va initialiser l'application Flask
- **configurer les routes
- **importer les autres modules 
- l'objet session de flask est un dictionnaire qui stocke toutes les données nécessaires pour ce projet:
+@file
+@brief Fichier principal de l'application Flask.
 
+@details
+Ce fichier initialise l'application Flask, configure les routes et importe les autres modules nécessaires.
+L'objet session de Flask est utilisé pour stocker les données globales nécessaires à ce projet.
 '''
- 
+
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, Response
 import numpy as np
 import json
@@ -18,7 +18,7 @@ import uuid
 from constantes import *
 
 # Chemin vers le fichier backlog.json
-#BACKLOG_FILE = os.path.join(os.path.dirname(__file__), 'data', 'backlog.json')
+# BACKLOG_FILE = os.path.join(os.path.dirname(__file__), 'data', 'backlog.json')
 
 # créer l'application Flask
 app = Flask(__name__)
@@ -26,18 +26,24 @@ app = Flask(__name__)
 # Secret key pour le développement local
 app.secret_key = CLE_SECRETE
 
+# Configurer le nom du serveur
 app.config['SERVER_NAME'] = NOM_SERVEUR
 
 # Initialisation d'AppManager avec chargement du backlog
 app_manager = AppManager()
 
 # les participants
-participants = ["lina","hugo"]
+participants = ["lina", "hugo"]
 
 # supprimer le cache du navigateur
 @app.after_request
 def add_header(response):
-    """Désactiver le cache pour éviter les valeurs obsolètes."""
+    """
+    @brief Désactive le cache du navigateur.
+
+    @param response La réponse HTTP générée par Flask.
+    @return La réponse modifiée avec les en-têtes pour désactiver le cache.
+    """
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '-1'
@@ -47,17 +53,15 @@ def add_header(response):
 @app.context_processor
 def inject_globals():
     """
-    Injecte les variables globales dans les templates.
+    @brief Injecte des variables globales dans les templates.
+    @return Dictionnaire contenant les variables globales (is_sm et is_po).
     """
     session_id = request.cookies.get('session_id')
     user_data = app_manager.get_data_participant(session_id) if session_id else {}
 
     # Si user_data n'est pas défini ou est vide, injecter des valeurs par défaut
     if not user_data:
-        return {
-            'is_sm': False, # identifier le scrum master
-            'is_po': False, # identifier le product ownner
-        }
+        return {'is_sm': False, 'is_po': False}
 
     # Sinon, injecter les valeurs réelles
     return {
@@ -65,12 +69,12 @@ def inject_globals():
         'is_po': user_data.get('is_po', False),
     }
 
-
+# Fonction utilitaire pour récupérer les données utilisateur
 def get_user_data():
     """
-    Vérifie la validité de la session et renvoie les données utilisateur actuelles.
+    @brief Vérifie la validité de la session et retourne les données utilisateur.
+    @return Les données utilisateur si la session est valide, sinon redirection vers login.
     """
-    # Récupérer le session_id depuis le cookie
     session_id = request.cookies.get('session_id')
     if not session_id:
         flash("Veuillez vous connecter.", "danger")
@@ -78,8 +82,8 @@ def get_user_data():
 
     # Appeler la méthode AppManager pour récupérer les données utilisateur
     user_data = app_manager.get_data_participant(session_id)
-    print("user data " , user_data)
-    print("session_id user data " , session_id)
+    print("user data ", user_data)
+    print("session_id user data ", session_id)
     if not user_data:
         flash("Session invalide ou expirée.", "danger")
         return redirect(url_for('login'))
@@ -90,8 +94,10 @@ def get_user_data():
 @app.route('/')
 def home():
     """
-    Point d'entrée de l'application.
-    Redirige les utilisateurs en fonction de leur rôle et de leur état de connexion.
+    @brief Point d'entrée de l'application.
+
+    Redirige les utilisateurs en fonction de leur état de connexion et de leur rôle.
+    @return Redirection vers la page de vote ou vers la page de connexion.
     """
     # Vérification et récupération des données utilisateur
     user_data = get_user_data()
@@ -110,14 +116,16 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
-    Gestion de la connexion des participants.
+    @brief Gestion de la connexion des participants.
+
+    @return Page de connexion ou redirection vers la salle de vote après authentification.
     """
     if request.method == 'POST':
         pseudo = request.form['pseudo']
         
         # Générer un ID de session unique
         session_id = str(uuid.uuid4())  
-        print("session_id login " , session_id)
+        print("session_id login ", session_id)
               
         # Autoriser uniquement PO, SM ou participants dans le backlog
         if pseudo.lower() not in [PO.lower(), SM.lower()] and pseudo not in participants:
@@ -133,21 +141,23 @@ def login():
 
         # Enregistrer l'état de la session
         session['session_id'] = session_id        
-        session.modified = True  # Marquer la session comme modifiée pour Flask
+        session.modified = True
         
         # Stocker le session_id dans un cookie
         response = redirect(url_for('salle_de_vote'))
-        response.set_cookie('session_id', session_id)  # Définir le cookie avec le session_id
+        response.set_cookie('session_id', session_id)
         return response
-        
-        # Rediriger vers la salle de vote
-        return redirect(url_for('salle_de_vote'))
             
     return render_template('login.html')
 
+# Route de déconnexion
 @app.route('/logout')
 def logout():
-    """Déconnexion de l'utilisateur."""
+    """
+    @brief Déconnecte un utilisateur.
+
+    @return Redirection vers la page de connexion.
+    """
     session_id = request.cookies.get('session_id')
 
     if session_id:
@@ -160,19 +170,15 @@ def logout():
     # Rediriger vers la page de connexion
     return redirect(url_for('login'))
 
+# Route pour la salle de vote
 @app.route('/salle_de_vote')
 def salle_de_vote():
     """
-    Affiche la salle de vote pour les participants.
+    @brief Affiche la salle de vote pour les participants connectés.
+    @return La page HTML de la salle de vote.
     """
     return render_template('salle_de_vote.html')
 
 # Démarrer l'application Flask (le serveur en mode debbugage)
-# Cela permet de recharger automatiquement le serveur lorsqu’il détecte des modifications dans le code, ce qui est pratique en développement.
-
 if __name__ == '__main__':
     app.run(debug=True)
-    
-    
- 
-                

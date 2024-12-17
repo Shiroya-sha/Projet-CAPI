@@ -26,5 +26,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./documentation/v1/html
-        destination_dir: v1/html
+        publish_dir: ./documentation/version1/html
+        destination_dir: version1/html
