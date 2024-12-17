@@ -7,7 +7,7 @@
  l'objet session de flask est un dictionnaire qui stocke toutes les données nécessaires pour ce projet:
 
 '''
-
+ 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash, Response
 import numpy as np
 import json
