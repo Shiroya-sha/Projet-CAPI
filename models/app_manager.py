@@ -1,9 +1,6 @@
 import json
 from constantes import *
-<<<<<<< HEAD
-=======
 from models.fonctionnalite import Fonctionnalite
->>>>>>> 2908ac5 (Ajout PO)
 
 # La classe principale qui gère l'application
 class AppManager:
@@ -11,21 +8,6 @@ class AppManager:
     @brief Classe principale pour la gestion des participants et des indicateurs globaux.
     """
 
-<<<<<<< HEAD
-    def __init__(self):
-        """
-        @brief Initialise l'état global pour les participants et les indicateurs.
-        """
-        self.state = {
-            "participants": {},
-            "indicators": {
-                "reunion_active": False,
-                "vote_commence": False,
-                "votes_reveles": False,
-                "tout_le_monde_a_vote": False
-            }
-        }
-=======
     def __init__(self, backlog_file=None):
         """
         @brief Initialise l'état global pour les participants et les indicateurs.
@@ -90,17 +72,12 @@ class AppManager:
         Trie la liste des fonctionnalités par priorité.
         """
         self.backlog.sort(key=lambda f: int(f.priorite))
->>>>>>> 2908ac5 (Ajout PO)
 
     def get_data_participant(self, session_id):
         """
         @brief Récupère les données d'un participant à partir de son session_id.
 
-<<<<<<< HEAD
-        @param session_id ID de session du participant.
-=======
         @param session_id ID de sessiontrier_backlog du participant.
->>>>>>> 2908ac5 (Ajout PO)
         @return Dictionnaire des données utilisateur ou None si non trouvé.
         """
         participant = self.state["participants"].get(session_id)
@@ -126,23 +103,6 @@ class AppManager:
         if not pseudo:
             raise ValueError("Le pseudo ne peut pas être vide.")
 
-<<<<<<< HEAD
-        # Vérification si le pseudo est autorisé
-        if pseudo.lower() not in [p.lower() for p in PARTICIPANTS_AUTORISES]:
-            raise ValueError(f"Le participant '{pseudo}' n'est pas autorisé.")
-
-        # Vérification des doublons
-        if pseudo in [p["pseudo"] for p in self.state["participants"].values()]:
-            raise ValueError(f"Le participant '{pseudo}' existe déjà.")
-
-        # Ajouter le participant
-        self.state["participants"][session_id] = {
-            "pseudo": pseudo,
-            "fonction": "Votant",
-            "avatar": f"https://placehold.co/60x60/{pseudo[:2].upper()}",
-            "vote": None
-        }
-=======
         # Vérification des doublons pseudo
         if pseudo in [p["pseudo"] for p in self.state["participants"]]:
             raise ValueError(f"Le participant avec le pseudo '{pseudo}' existe déjà.")
@@ -247,7 +207,6 @@ class AppManager:
         self.backlog = [f for f in self.backlog if f.id != fonctionnalite_id]
         self.sauvegarder_backlog()
 
->>>>>>> 2908ac5 (Ajout PO)
 
     def logout_participant(self, session_id):
         """

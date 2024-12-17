@@ -18,11 +18,7 @@ import uuid
 from constantes import *
 
 # Chemin vers le fichier backlog.json
-<<<<<<< HEAD
-# BACKLOG_FILE = os.path.join(os.path.dirname(__file__), 'data', 'backlog.json')
-=======
 BACKLOG_FILE = os.path.join(os.path.dirname(__file__), 'data', 'backlog.json')
->>>>>>> 2908ac5 (Ajout PO)
 
 # créer l'application Flask
 app = Flask(__name__)
@@ -33,16 +29,8 @@ app.secret_key = CLE_SECRETE
 # Configurer le nom du serveur
 app.config['SERVER_NAME'] = NOM_SERVEUR
 
-<<<<<<< HEAD
-# Initialisation d'AppManager avec chargement du backlog
-app_manager = AppManager()
-
-# les participants
-participants = ["lina", "hugo"]
-=======
 # création de l'objet AppManager avec chargement du backlog
 app_manager = AppManager(backlog_file=BACKLOG_FILE)
->>>>>>> 2908ac5 (Ajout PO)
 
 # supprimer le cache du navigateur
 @app.after_request
@@ -65,19 +53,6 @@ def inject_globals():
     @brief Injecte des variables globales dans les templates.
     @return Dictionnaire contenant les variables globales (is_sm et is_po).
     """
-<<<<<<< HEAD
-    session_id = request.cookies.get('session_id')
-    user_data = app_manager.get_data_participant(session_id) if session_id else {}
-
-    # Si user_data n'est pas défini ou est vide, injecter des valeurs par défaut
-    if not user_data:
-        return {'is_sm': False, 'is_po': False}
-
-    # Sinon, injecter les valeurs réelles
-    return {
-        'is_sm': user_data.get('is_sm', False),
-        'is_po': user_data.get('is_po', False),
-=======
     # Récupérer le pseudo actif depuis la session
     pseudo_actif = session.get('pseudo_actif')
     participant_actif = None
@@ -91,7 +66,6 @@ def inject_globals():
         "pseudo_actif": pseudo_actif,
         "participant_actif": participant_actif,
         "state": app_manager.state,
->>>>>>> 2908ac5 (Ajout PO)
     }
 
 # Fonction utilitaire pour récupérer les données utilisateur
@@ -100,26 +74,11 @@ def get_user_data():
     @brief Vérifie la validité de la session et retourne les données utilisateur.
     @return Les données utilisateur si la session est valide, sinon redirection vers login.
     """
-<<<<<<< HEAD
-    session_id = request.cookies.get('session_id')
-=======
     session_id = session.get('session_id')
->>>>>>> 2908ac5 (Ajout PO)
     if not session_id:
         flash("Veuillez vous connecter.", "danger")
         return redirect(url_for('login'))
 
-<<<<<<< HEAD
-    # Appeler la méthode AppManager pour récupérer les données utilisateur
-    user_data = app_manager.get_data_participant(session_id)
-    print("user data ", user_data)
-    print("session_id user data ", session_id)
-    if not user_data:
-        flash("Session invalide ou expirée.", "danger")
-        return redirect(url_for('login'))
-
-    return user_data
-=======
     
     # Récupérer les données du participant via AppManager
     participant = next((p for p in app_manager.state["participants"] if p["session_id"] == session_id), None)
@@ -129,63 +88,30 @@ def get_user_data():
 
     # Retourner les données du participant
     return participant
->>>>>>> 2908ac5 (Ajout PO)
 
 # Route par défaut
 @app.route('/')
 def home():
     """
     @brief Point d'entrée de l'application.
-<<<<<<< HEAD
-
-    Redirige les utilisateurs en fonction de leur état de connexion et de leur rôle.
-    @return Redirection vers la page de vote ou vers la page de connexion.
-    """
-    # Vérification et récupération des données utilisateur
-    user_data = get_user_data()
-    if isinstance(user_data, Response):  # Redirection si non connecté
-        return user_data
-
-    # Mise à jour des indicateurs globaux (injection pour les templates)
-    is_sm = user_data.get('is_sm', False)
-    is_po = user_data.get('is_po', False)
-    session['is_sm'] = is_sm
-    session['is_po'] = is_po
-    session.modified = True
-    return redirect(url_for('salle_de_vote'))
-=======
     Redirige les utilisateurs vers la page de connexion
     @return Redirection vers la page de connexion.
     """
     return redirect(url_for('login'))
->>>>>>> 2908ac5 (Ajout PO)
 
 # Page de connexion
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
     @brief Gestion de la connexion des participants.
-<<<<<<< HEAD
-
-    @return Page de connexion ou redirection vers la salle de vote après authentification.
-    """
-    if request.method == 'POST':
-        pseudo = request.form['pseudo']
-=======
     @return Page de connexion ou redirection vers la salle de vote après authentification.
     """
     if request.method == 'POST':
         pseudo = request.form['pseudo'].strip().lower()
->>>>>>> 2908ac5 (Ajout PO)
         
         # Générer un ID de session unique
         session_id = str(uuid.uuid4())  
         print("session_id login ", session_id)
-<<<<<<< HEAD
-              
-        # Autoriser uniquement PO, SM ou participants dans le backlog
-        if pseudo.lower() not in [PO.lower(), SM.lower()] and pseudo not in participants:
-=======
 
          # Vérifier si le pseudo est valide
         fonctionnalite_prioritaire = app_manager.afficher_fonctionnalite_prioritaire()
@@ -193,31 +119,15 @@ def login():
               
        # Autoriser uniquement PO, SM ou participants du backlog
         if pseudo not in ["po", "sm"] and pseudo not in participants_backlog:
->>>>>>> 2908ac5 (Ajout PO)
             flash(f"Le pseudo '{pseudo}' n'est pas autorisé à se connecter pour cette session.", "danger")
             return redirect(url_for('login'))
         
         try:
             app_manager.ajouter_participant(pseudo, session_id)
-<<<<<<< HEAD
-            print("session_id login :", session_id)
-=======
->>>>>>> 2908ac5 (Ajout PO)
         except ValueError as e:
             flash(str(e), "danger")
             return redirect(url_for('login'))
 
-<<<<<<< HEAD
-        # Enregistrer l'état de la session
-        session['session_id'] = session_id        
-        session.modified = True
-        
-        # Stocker le session_id dans un cookie
-        response = redirect(url_for('salle_de_vote'))
-        response.set_cookie('session_id', session_id)
-        return response
-            
-=======
         # Stocker la session et rediriger vers la salle de vote
         session['session_id'] = session_id
         session.modified = True
@@ -225,7 +135,6 @@ def login():
         response.set_cookie('session_id', session_id)
         return response
 
->>>>>>> 2908ac5 (Ajout PO)
     return render_template('login.html')
 
 # Route de déconnexion
@@ -255,9 +164,6 @@ def salle_de_vote():
     @brief Affiche la salle de vote pour les participants connectés.
     @return La page HTML de la salle de vote.
     """
-<<<<<<< HEAD
-    return render_template('salle_de_vote.html')
-=======
     user_data = get_user_data()
     if not user_data:
         # Si aucune donnée utilisateur n'est retournée, rediriger vers la salle de vote
@@ -473,7 +379,6 @@ def supprimer_fonctionnalite_route(fonctionnalite_id):
 
     # Redirection vers le backlog
     return redirect(url_for('backlog'))
->>>>>>> 2908ac5 (Ajout PO)
 
 # Démarrer l'application Flask (le serveur en mode debbugage)
 if __name__ == '__main__':
