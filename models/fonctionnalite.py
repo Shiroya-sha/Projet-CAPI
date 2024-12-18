@@ -1,8 +1,8 @@
-# Fonctionnalites.py
+# Fonctionnalite.py
 import statistics
 from constantes import *
 
-# models/fonctionnalites.py
+# models/fonctionnalite.py
 class Fonctionnalite:
     """
     @class Fonctionnalite
