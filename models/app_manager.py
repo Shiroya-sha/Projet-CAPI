@@ -103,6 +103,11 @@ class AppManager:
         if not pseudo:
             raise ValueError("Le pseudo ne peut pas être vide.")
 
+        # Vérification si le pseudo est autorisé
+        PARTICIPANTS_AUTORISES = ["po", "sm", "lina", "hugo"]  # Liste des participants autorisés
+        if pseudo.lower() not in PARTICIPANTS_AUTORISES:
+            raise ValueError(f"Le participant '{pseudo}' n'est pas autorisé.")
+
         # Vérification des doublons pseudo
         if pseudo in [p["pseudo"] for p in self.state["participants"]]:
             raise ValueError(f"Le participant avec le pseudo '{pseudo}' existe déjà.")
@@ -134,8 +139,7 @@ class AppManager:
         print(f"Participant ajouté : {self.state['participants']}")
         
         # ajout mappage id session et pseudo
-        self.state["mapper_session"][pseudo] = session_id
-        
+        self.state["mapper_session"][pseudo] = session_id        
         print(f"state : {self.state}")
 
     def get_fonctionnalite(self, fonctionnalite_id):

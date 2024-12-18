@@ -68,27 +68,6 @@ def inject_globals():
         "state": app_manager.state,
     }
 
-# Fonction utilitaire pour récupérer les données utilisateur
-def get_user_data():
-    """
-    @brief Vérifie la validité de la session et retourne les données utilisateur.
-    @return Les données utilisateur si la session est valide, sinon redirection vers login.
-    """
-    session_id = session.get('session_id')
-    if not session_id:
-        flash("Veuillez vous connecter.", "danger")
-        return redirect(url_for('login'))
-
-    
-    # Récupérer les données du participant via AppManager
-    participant = next((p for p in app_manager.state["participants"] if p["session_id"] == session_id), None)
-    if not participant:
-        flash("Session invalide ou expirée.", "danger")
-        return redirect(url_for('login'))
-
-    # Retourner les données du participant
-    return participant
-
 # Route par défaut
 @app.route('/')
 def home():
@@ -116,24 +95,25 @@ def login():
          # Vérifier si le pseudo est valide
         fonctionnalite_prioritaire = app_manager.afficher_fonctionnalite_prioritaire()
         participants_backlog = fonctionnalite_prioritaire.participants if fonctionnalite_prioritaire else []
-              
+        print("participants_backlog : ",participants_backlog)
+
        # Autoriser uniquement PO, SM ou participants du backlog
-        if pseudo not in ["po", "sm"] and pseudo not in participants_backlog:
+        if pseudo not in ["po","PO","sm", "SM"] and pseudo not in participants_backlog:
             flash(f"Le pseudo '{pseudo}' n'est pas autorisé à se connecter pour cette session.", "danger")
             return redirect(url_for('login'))
         
         try:
             app_manager.ajouter_participant(pseudo, session_id)
+            # Stocker la session et rediriger vers la salle de vote
+            session['session_id'] = session_id
+            session.modified = True
+
+            reponse = redirect(url_for('salle_de_vote'))
+            reponse.set_cookie('session_id', session_id)
+            return reponse
         except ValueError as e:
             flash(str(e), "danger")
             return redirect(url_for('login'))
-
-        # Stocker la session et rediriger vers la salle de vote
-        session['session_id'] = session_id
-        session.modified = True
-        response = redirect(url_for('salle_de_vote'))
-        response.set_cookie('session_id', session_id)
-        return response
 
     return render_template('login.html')
 
@@ -164,9 +144,15 @@ def salle_de_vote():
     @brief Affiche la salle de vote pour les participants connectés.
     @return La page HTML de la salle de vote.
     """
-    user_data = get_user_data()
-    if not user_data:
-        # Si aucune donnée utilisateur n'est retournée, rediriger vers la salle de vote
+    print("Session actuelle :", session)
+    if 'session_id' not in session:
+        flash("Vous devez être connecté pour accéder à cette page.", "danger")
+        return redirect(url_for('login'))
+
+    # Vérifier si le participant existe dans les données d'AppManager
+    participant = next((p for p in app_manager.state["participants"] if p["session_id"] == session['session_id']), None)
+    if not participant:
+        flash("Session invalide ou expirée.", "danger")
         return redirect(url_for('login'))
 
     fonctionnalite_prioritaire = app_manager.afficher_fonctionnalite_prioritaire()
@@ -263,7 +249,7 @@ def ajouter_fonctionnalite():
     erreurs = {}
     pseudo_actif = session.get('pseudo_actif')
     if not pseudo_actif or pseudo_actif.lower() != "po":
-        flash("Accès réservé au Product Owner.", "danger")
+        flash("Acces reserve au Product Owner", "danger")
         return redirect(url_for('salle_de_vote'))
     try:
         nom = request.form.get('nom', '').strip()
