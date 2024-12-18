@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['inject_5fglobals_22',['inject_globals',['../namespaceProjet-CAPI_1_1app.html#a4ace962dae8112de7cde952d376ad331',1,'Projet-CAPI::app']]]
+  ['home_27',['home',['../namespaceProjet-CAPI_1_1app.html#a712df82636411b97e91654f264554f3e',1,'Projet-CAPI::app']]]
 ];
