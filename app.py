@@ -39,6 +39,7 @@ def add_header(response):
     @brief Désactive le cache du navigateur.
 
     @param response La réponse HTTP générée par Flask.
+    
     @return La réponse modifiée avec les en-têtes pour désactiver le cache.
     """
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
@@ -51,6 +52,7 @@ def add_header(response):
 def inject_globals():
     """
     @brief Injecte des variables globales dans les templates.
+
     @return Dictionnaire contenant les variables globales (is_sm et is_po).
     """
     # Récupérer le pseudo actif depuis la session
@@ -73,7 +75,9 @@ def inject_globals():
 def home():
     """
     @brief Point d'entrée de l'application.
-    Redirige les utilisateurs vers la page de connexion
+
+    @details Redirige les utilisateurs vers la page de connexion
+
     @return Redirection vers la page de connexion.
     """
     return redirect(url_for('login'))
@@ -83,7 +87,13 @@ def home():
 def login():
     """
     @brief Gestion de la connexion des participants.
-    @return Page de connexion ou redirection vers la salle de vote après authentification.
+
+    @details Cette route permet de se connecter avec un pseudo valide.
+    Si le pseudo est valide, un ID de session unique est généré,
+    et l'utilisateur est redirigé vers la salle de vote.
+
+    @return Page de connexion ou redirection vers la salle 
+    de vote après authentification.
     """
     if request.method == 'POST':
         pseudo = request.form['pseudo'].strip().lower()
@@ -142,6 +152,10 @@ def logout():
 def salle_de_vote():
     """
     @brief Affiche la salle de vote pour les participants connectés.
+
+    @details Cette route vérifie si un utilisateur est authentifié.
+    Si l'utilisateur n'est pas connecté ou la session est invalide, il est redirigé.
+
     @return La page HTML de la salle de vote.
     """
     print("Session actuelle :", session)
@@ -178,7 +192,13 @@ def salle_de_vote():
 @app.route('/set_pseudo_actif', methods=['POST'])
 def set_pseudo_actif():
     """
-    Définit le participant actif basé sur le pseudo sélectionné.
+    @brief Définit le participant actif basé sur le pseudo sélectionné.
+
+    @details Cette route est appelée lorsqu'un utilisateur 
+    clique sur l'avatar d'un participant.Elle met à jour le 
+    pseudo actif dans la session Flask.
+
+    @return Redirection vers la salle de vote.
     """
     pseudo = request.form.get("pseudo")  # Obtenu depuis le clic sur l'avatar
     if not pseudo:
@@ -200,25 +220,28 @@ def set_pseudo_actif():
 
 @app.route('/backlog')
 def backlog():
-    # Page de gestion du backlog.
-    #user_data = get_user_data()
-    # if not user_data['is_po']:
-    #     flash(ACCES_RESERVE_PO, "danger")
-    #     return redirect(url_for('salle_de_vote')) """ """ """ """
+    """
+    @brief Affiche le backlog des fonctionnalités.
 
-    # Récupérer le pseudo actif depuis la session
-    #pseudo_actif = session.get('pseudo_actif')
-    
+    @details Cette route retourne une vue contenant 
+    toutes les fonctionnalités du backlog.
+
+    @return La page HTML du backlog.
+    """
     backlog = app_manager.lister_backlog()
     return render_template('backlog.html', backlog=backlog)
-
-
 
 @app.route('/afficher_ajout_fonctionnalite')
 def afficher_ajout_fonctionnalite():
     """
-    Affiche la page pour ajouter une nouvelle fonctionnalité.
-    Accessible uniquement pour le Product Owner.
+    @brief Affiche la page pour ajouter une nouvelle fonctionnalité.
+
+    @details Accessible uniquement pour le Product Owner.
+    Si aucun participant actif n'est sélectionné ou si le 
+    participant actif n'est pas un Product Owner, un message 
+    d'erreur est affiché et l'utilisateur est redirigé.
+
+    @return La page HTML pour ajouter une fonctionnalité ou une redirection vers la salle de vote.
     """
     pseudo_actif = session.get('pseudo_actif')
     if not pseudo_actif:
@@ -246,6 +269,15 @@ def afficher_ajout_fonctionnalite():
 
 @app.route('/ajouter_fonctionnalite', methods=['POST'])
 def ajouter_fonctionnalite():
+    """
+    @brief Ajoute une nouvelle fonctionnalité au backlog.
+
+    @details Valide les données soumises via le formulaire d'ajout de fonctionnalité.
+    Si les données sont valides, la fonctionnalité est ajoutée via AppManager.
+    Sinon, des erreurs sont affichées et l'utilisateur reste sur la page d'ajout.
+
+    @return Redirection vers le backlog ou la page d'ajout en cas d'erreur.
+    """
     erreurs = {}
     pseudo_actif = session.get('pseudo_actif')
     if not pseudo_actif or pseudo_actif.lower() != "po":
@@ -287,6 +319,14 @@ def ajouter_fonctionnalite():
 
 @app.route('/ajouter_participant_route', methods=['POST'])
 def ajouter_participant_route():
+    """
+    @brief Ajoute un participant temporaire à une fonctionnalité.
+
+    @details Cette route permet d'ajouter un participant temporaire via le formulaire 
+    d'ajout de fonctionnalité. Les données temporaires sont stockées dans la session.
+
+    @return Redirection vers la page d'ajout de fonctionnalité.
+    """
     pseudo = request.form.get('participant_pseudo', '').strip()
     print("participant ajouté dans fonctionnalité :", pseudo)
 
@@ -308,20 +348,25 @@ def ajouter_participant_route():
         "priorite": request.form.get('priorite', '').strip(),
         "difficulte": request.form.get('difficulte', '').strip()
     }
-
     return redirect(url_for('afficher_ajout_fonctionnalite'))
-
-
 
 @app.route('/edit_fonctionnalite_route/<int:fonctionnalite_id>', methods=['GET', 'POST'])
 def edit_fonctionnalite_route(fonctionnalite_id):
+    """
+    @brief Modifie une fonctionnalité existante.
 
+    @details Cette route affiche la page d'édition d'une fonctionnalité
+    ou applique les modifications soumises via le formulaire.
+
+    @param fonctionnalite_id L'identifiant de la fonctionnalité à modifier.
+
+    @return Redirection vers le backlog ou la page d'édition.
+    """
     # Récupérer la fonctionnalité à modifier via AppManager
     fonctionnalite = app_manager.get_fonctionnalite(fonctionnalite_id)
     if not fonctionnalite:
         flash("Fonctionnalité non trouvée.", "danger")
         return redirect(url_for('backlog'))
-
     if request.method == 'POST':
         try:
             # Récupérer les données du formulaire
@@ -352,6 +397,16 @@ def edit_fonctionnalite_route(fonctionnalite_id):
 
 @app.route('/supprimer_fonctionnalite_route/<int:fonctionnalite_id>', methods=['GET','POST'])
 def supprimer_fonctionnalite_route(fonctionnalite_id):
+    """
+    @brief Supprime une fonctionnalité existante.
+
+    @details Cette route permet de supprimer une fonctionnalité du backlog 
+    en fonction de son identifiant.
+
+    @param fonctionnalite_id L'identifiant de la fonctionnalité à supprimer.
+
+    @return Redirection vers le backlog après suppression.
+    """
 
     try:
         # Déléguer la suppression à AppManager

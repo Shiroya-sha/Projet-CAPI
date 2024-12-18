@@ -14,6 +14,18 @@
             ]
         },
         {
+            "id": 15,
+            "nom": "test14",
+            "description": "TEST",
+            "priorite": 1,
+            "difficulte": 1,
+            "statut": "A faire",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "hugo"
+            ]
+        },
+        {
             "id": 10,
             "nom": "qsqs",
             "description": "qssqs",
@@ -47,10 +59,21 @@
             "priorite": "5",
             "difficulte": "66",
             "statut": "Termin\u00e9",
+            "mode_de_vote": "strict",
+            "participants": [
+                "sfdf"
+            ]
+        },
+        {
+            "id": 13,
+            "nom": "test12",
+            "description": ";jh",
+            "priorite": 5,
+            "difficulte": 1,
+            "statut": "A faire",
             "mode_de_vote": "unanimite",
             "participants": [
-                "aze",
-                "sfdf"
+                "lina"
             ]
         },
         {
