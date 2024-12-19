@@ -18,12 +18,11 @@ o	Pour les membres : un outil de consultation des décisions.
 o	Pour le Project Owner : une plateforme pour valider ou reconsidérer les votes exprimés par les participants.
 ________________________________________
 Fonctionnalités principales opérationnelles :
-Dans cette version 1, les seules fonctionnalités pleinement fonctionnelles sont :
-•	La connexion via des comptes préconfigurés par le Project Owner.
-•	La déconnexion grâce au bouton Logout.
+Dans cette version 1, les seules fonctionnalités pleinement fonctionnelles sont la connexion via des comptes préconfigurés par le Project Owner ainsi que la déconnexion grâce au bouton Logout.
 ________________________________________
 Objectif de la version 1 :
 Cette version représente le résultat de notre premier sprint. L'objectif était de déployer une version minimale mais fonctionnelle que nous pourrions présenter au client.
-•	Pourquoi déployer si tôt ?
+
+Pourquoi déployer si tôt ?
 Même si l'application est encore basique et peu interactive, cette démonstration permet au client de visualiser les avancées concrètes du projet. C'est une preuve tangible que le développement progresse de manière constante et méthodique.
 
