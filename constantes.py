@@ -16,7 +16,7 @@ PARTICIPANTS_AUTORISES = ["PO", "SM", "lina", "hugo"]
 VOTANT = 'VOTANT'  # Votant régulier
 
 # Modes de vote
-VOTE_STRICT = 'strict'  # Unanimité
+VOTE_UNANIMITE = 'unanimite'  # Unanimité
 VOTE_MOYENNE = 'moyenne'  # Moyenne des votes
 
 # Statuts des fonctionnalités
@@ -46,9 +46,9 @@ FLASH_VOTES_REVELES = "le vote est révélé"
 
 
 # Cartes de vote
-CARTES_VOTE = ["1", "2", "3", "5", "8", "13", "20", "40", "80", "100", "?", "café"]
+CARTES_VOTE = ["1", "2", "3", "5", "8", "13", "20", "40", "80", "100", "?", "cafe"]
 
-
+LISTE_CARTE_NUMERIQUE = ["1", "2", "3", "5", "8", "13", "20", "40", "80", "100"]
 
 # Limites diverses
 PRIORITE_MIN = 1

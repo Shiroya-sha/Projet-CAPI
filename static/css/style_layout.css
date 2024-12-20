@@ -36,6 +36,16 @@ nav ul li a {
     font-size: 18px;
 }
 
+/* Style pour le lien Logout désactivé */
+.disabled-link {
+    font-size: 16px;       /* Assure une taille de police uniforme */
+    color: #aaa;           /* Couleur grise mais visible */
+    text-decoration: none; /* Pas de soulignement */
+    pointer-events: none;  /* Désactive les clics */
+    cursor: not-allowed;   /* Affiche le curseur "non autorisé" */
+    opacity: 1;            /* Garde une opacité complète pour rendre le texte clair */
+}
+
 .content {
     width: 100%;
     padding: 20px;

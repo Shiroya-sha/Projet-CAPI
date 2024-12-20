@@ -3,7 +3,7 @@ name: Generate and Deploy Doxygen Documentation
 on:
   push:
     branches:
-      - main
+      - version3
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
       run: sudo apt-get install doxygen graphviz -y
 
     - name: Create Output Directory
-      run: mkdir -p documentation/v1/html
+      run: mkdir -p documentation/v3/html
 
     - name: Generate Documentation
       run: doxygen doxyfile.conf
@@ -26,5 +26,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.PAT_TOKEN }}
-        publish_dir: ./documentation/version1/html
-        destination_dir: version1/html
+        publish_dir: ./documentation/version3/html
+        destination_dir: version3/html

@@ -1,0 +1,121 @@
+{
+    "backlog": [
+        {
+            "id": 6,
+            "nom": "Fonctionnalité 8",
+            "description": "kjkjkjkj",
+            "priorite": 8,
+            "difficulte": 5,
+            "statut": "A faire",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 9,
+            "nom": "Fonctionnalité 13",
+            "description": "ffd",
+            "priorite": 13,
+            "difficulte": 66,
+            "statut": "A faire",
+            "mode_de_vote": "moyenne",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 7,
+            "nom": "Fonctionnalité 1",
+            "description": "cvcv",
+            "priorite": 1,
+            "difficulte": 25,
+            "statut": "Terminé",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 15,
+            "nom": "Fonctionnalité 3",
+            "description": "TEST",
+            "priorite": 3,
+            "difficulte": 1,
+            "statut": "Terminé",
+            "mode_de_vote": "moyenne",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 10,
+            "nom": "Fonctionnalité 4",
+            "description": "qssqs",
+            "priorite": 4,
+            "difficulte": 8,
+            "statut": "Terminé",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 13,
+            "nom": "Fonctionnalité 5",
+            "description": ";jh",
+            "priorite": 5,
+            "difficulte": 1,
+            "statut": "Terminé",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 8,
+            "nom": "Fonctionnalité 6",
+            "description": "sdscvc xvxv",
+            "priorite": 6,
+            "difficulte": 20,
+            "statut": "Terminé",
+            "mode_de_vote": "moyenne",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 12,
+            "nom": "Fonctionnalité 7",
+            "description": "test1",
+            "priorite": 7,
+            "difficulte": 1,
+            "statut": "Terminé",
+            "mode_de_vote": "unanimite",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        },
+        {
+            "id": 11,
+            "nom": "Fonctionnalité 18",
+            "description": "fdgf hjhj",
+            "priorite": 18,
+            "difficulte": 4,
+            "statut": "Terminé",
+            "mode_de_vote": "unanimité",
+            "participants": [
+                "lina",
+                "hugo"
+            ]
+        }
+    ]
+}

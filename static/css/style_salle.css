@@ -19,19 +19,66 @@
 }
 
 /* Grille des participants */
-.participant-grid {
-    display: flex; /* Active le mode flexbox */
-    flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
-    gap: 20px; /* Espace entre les éléments */
-    justify-content: center; /* Centre les avatars horizontalement */
+/*.participant-grid {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+}
+ */
+
+/* Grille des participants */
+.participant-grille, .fonction-grille-droite {
+    display: flex;
+    flex-wrap: wrap; /* Permet de passer à la ligne si nécessaire */
+    gap: 20px; /* Espacement horizontal et vertical entre les avatars */
+    justify-content: flex-start; /* Aligner les avatars à gauche */
+    align-items: center; /* Centrer les avatars verticalement */
 }
 
-/* Grille pour les rôles PO et SM */
-.role-grid {
-    display: flex; /* Active Flexbox */
-    gap: 20px; /* Espace entre les rôles */
-    justify-content: center; /* Centre les éléments horizontalement */
-    margin: 20px 0; /* Espacement vertical autour de la grille */
+/* Avatar bouton pour tous les rôles */
+.avatar-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #f9f9f9; /* Fond par défaut */
+    border: 2px solid transparent; /* Pas de bordure par défaut */
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+    width: 100px; /* Largeur uniforme */
+    height: auto;
+}
+
+/* Avatar pour PO */
+.avatar-button[data-role="Product Owner"] {
+    background-color: #ffac33; /* Vert */
+}
+
+/* Avatar pour SM */
+.avatar-button[data-role="Scrum Master"] {
+    background-color: #a533ff ; /* Vert clair */
+}
+
+/* Avatar pour les participants (autres) */
+.avatar-button[data-role="Votant"] {
+    background-color: #33b5ff; /* Jaune */
+}
+
+/* Effet au survol */
+.avatar-button:hover {
+    background-color: #ddd; /* Gris clair au survol */
+    border-color: #007bff; /* Bordure bleue */
+}
+
+
+.avatar-image {
+    width: 60px; /* Largeur fixe */
+    height: 60px; /* Hauteur fixe */
+    object-fit: cover; /* Adapte l'image pour qu'elle remplisse la zone sans déformer */
+    border-radius: 50%; /* Pour un effet circulaire si nécessaire */
 }
 
 .participant {
@@ -54,6 +101,8 @@
     margin-bottom: 10px;
     object-fit: cover; /* Les images sont ajustées sans déformation */
 }
+
+
 
 .special-role {
     margin: 20px 0;
