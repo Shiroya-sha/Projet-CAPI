@@ -1,6 +1,6 @@
 # Application Planning Poker
 
-## La documentation doxygen est disponible sous la version 3 correspondant à la branche main.
+## La documentation doxygen est disponible sous la version 3 dans la branche gh-pages correspondant à la branche main.
 
 ## Introduction
 L'application Planning Poker est un outil collaboratif conçu pour aider les équipes agiles à estimer la complexité et l'effort nécessaires pour réaliser les tâches d'un backlog. Cette application fonctionne sur un appareil partagé, où les membres de l'équipe se connectent à tour de rôle pour jouer leurs rôles (Product Owner (PO), Scrum Master (SM), ou votant). Elle intègre les principes clés de l'agilité, offrant une interface intuitive pour la gestion des backlogs, les votes et la facilitation des sessions.
