@@ -1,0 +1,30 @@
+name: Generate and Deploy Doxygen Documentation
+
+on:
+  push:
+    branches:
+      - version3
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Doxygen
+      run: sudo apt-get install doxygen graphviz -y
+
+    - name: Create Output Directory
+      run: mkdir -p documentation/v3/html
+
+    - name: Generate Documentation
+      run: doxygen doxyfile.conf
+
+    - name: Deploy Documentation
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.PAT_TOKEN }}
+        publish_dir: ./documentation/version3/html
+        destination_dir: version3/html
