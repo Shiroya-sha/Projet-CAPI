@@ -1,22 +1,158 @@
-Version 3 - Gestion avancée des votes et des réunions La troisième version de notre application introduit un rôle clé dans le processus de prise de décision : le Scrum Master (SM). Cette version marque une étape majeure, car elle permet désormais de conduire une réunion complète, du vote à la validation finale des fonctionnalités d'un projet.
+# Application Planning Poker
 
-Nouveautés de la version 3 :
+## Introduction
+L'application Planning Poker est un outil collaboratif conçu pour aider les équipes agiles à estimer la complexité et l'effort nécessaires pour réaliser les tâches d'un backlog. Cette application fonctionne sur un appareil partagé, où les membres de l'équipe se connectent à tour de rôle pour jouer leurs rôles (Product Owner (PO), Scrum Master (SM), ou votant). Elle intègre les principes clés de l'agilité, offrant une interface intuitive pour la gestion des backlogs, les votes et la facilitation des sessions.
 
-Rôle du Scrum Master (SM) Le Scrum Master joue un rôle central dans l'organisation et la gestion des réunions. Ses responsabilités incluent :
-Activation et lancement des protocoles de vote : Le SM initie les séances de vote une fois que tous les utilisateurs sont connectés.
+Chaque rôle a des responsabilités spécifiques :
+- **Product Owner (PO) :** Gère le backlog et définit les priorités.
+- **Scrum Master (SM) :** Supervise le processus de vote et valide les résultats.
+- **Votants :** Membres de l'équipe qui votent pour estimer les tâches.
 
-Validation ou invalidation des votes : Il examine les résultats des votes et décide de leur validité.
+L'application assure une collaboration fluide grâce à des fonctionnalités de sauvegarde et de reprise des sessions, suivi de progression et exportation des résultats.
 
-Gestion des désaccords : En cas de divergence ou d'incohérence, le SM a la capacité de trancher ou de relancer un vote pour une fonctionnalité donnée.
+## Aperçu des fonctionnalités
+1. **Connexion :**
+   - Les utilisateurs se connectent à tour de rôle en sélectionnant leurs rôles depuis le backlog prédéfini.
+2. **Gestion du backlog :**
+   - Le PO gère le backlog, ajoutant, modifiant et priorisant les tâches.
+3. **Vote :**
+   - Les votants estiment les tâches.
+   - Le SM révèle et valide les votes ou facilite les discussions en cas de désaccord.
+4. **Gestion des sessions :**
+   - La progression est sauvegardée dans un fichier JSON.
+   - Les sessions peuvent être reprises à tout moment.
 
-Coordination des séances : Le SM assure que la réunion se déroule de manière fluide et structurée.
+---
 
-Processus de vote dans la Salle de vote Une fois une séance de vote lancée, les utilisateurs peuvent participer au vote pour chaque fonctionnalité depuis la Salle de vote. Si un scrutin nécessite d’être repris (par exemple, en cas de désaccord), le SM peut relancer le processus pour la fonctionnalité concernée.
+### Gestion des cartes spéciales : Carte Café et Point d'Interrogation
 
-Réunions complètes et validées Grâce à l’ajout du rôle de Scrum Master et des nouvelles fonctionnalités associées, il est désormais possible de :
+#### **Carte Café**
+La carte café est une option spéciale qui permet de suspendre la session pour une pause collective. Voici comment elle fonctionne :
+1. **Processus :**
+   - Tous les participants, y compris le Product Owner (PO) et le Scrum Master (SM), doivent voter "café".
+   - Une fois que tous les participants ont voté, l'application passe automatiquement en mode "pause".
+2. **Sauvegarde de l'état :**
+   - Le Scrum Master doit cliquer sur **"État initial du backlog"** pour sauvegarder la session en cours avant la pause.
+3. **Reprise :**
+   - Une fois que tous les participants reviennent de la pause, la session peut être reprise en chargeant l'état sauvegardé.
 
-Organiser des réunions complètes réunissant tous les participants connectés. Conduire des votes structurés pour chaque fonctionnalité. Finaliser les fonctionnalités d’un projet avec validation officielle par le SM.
+#### **Point d'Interrogation**
+La carte "?" (point d'interrogation) est utilisée lorsqu'un participant estime qu'il n'a pas suffisamment d'informations ou qu'une discussion est nécessaire :
+1. **Processus :**
+   - Si un participant sélectionne "?", l'application active automatiquement le mode "discussion".
+   - Un message est affiché pour signaler qu'une discussion est nécessaire avant de continuer.
+2. **Reprise :**
+   - Après la discussion, le Scrum Master peut réinitialiser les votes pour permettre un nouveau tour d'estimation.
 
-Objectifs de la version 3 : Cette version vise à structurer et professionnaliser le processus décisionnel en réunion. Elle permet d’assurer que chaque fonctionnalité est validée de manière collaborative tout en maintenant un contrôle rigoureux grâce au rôle du Scrum Master.
+---
 
-Pourquoi ces améliorations ? La gestion des votes et des désaccords est essentielle dans les projets collaboratifs. En intégrant le rôle de Scrum Master, l'application devient un véritable outil de gestion de réunion agile, garantissant des résultats clairs et validés pour tous les participants.
+## Instructions d'installation
+
+### Prérequis
+Assurez-vous d'avoir les éléments suivants installés :
+- Python 3.11.1
+- Pip
+
+### Étapes pour exécuter l'application
+
+1. **Cloner le dépôt :**
+   ```bash
+   git clone https://github.com/Organisation-CAPI/Projet-CAPI.git
+   cd <repository_name>
+   ```
+
+2. **Installer les dépendances :**
+   Installez les dépendances requises en utilisant le fichier `requirements.txt` :
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Lancer l'application :**
+   Lancez l'application avec la commande suivante :
+   ```bash
+   python app.py
+   ```
+
+4. **Accéder à l'application :**
+   Ouvrez votre navigateur web et accédez à :
+   ```
+   http://127.0.0.1:5000
+   ```
+
+## Comment utiliser l'application
+
+### Processus de connexion
+1. Les utilisateurs se connectent un à un en sélectionnant leurs rôles, les pseudonymes sont : PO, SM et les votants prédéfinis depuis le backlog.
+2. Une fois connectés, ils sont redirigés vers l'interface principale qui affiche les options en fonction de leurs rôles.
+
+### Gestion du backlog (PO)
+1. Le PO peut ajouter, modifier ou supprimer des tâches dans le backlog.
+2. Chaque tâche inclut des détails comme le nom, la description, la priorité, la difficulté et les participants assignés.
+3. Les tâches sont sauvegardées dans un fichier JSON pour la persistance.
+
+### Processus de vote
+1. **Démarrer le vote (SM) :**
+   - Le SM initie le processus de vote via le menu "Accès SM" et sélectionne "Initier le vote".
+   - Les participants connectés à la session sont affichés.
+
+2. **Soumettre les votes (Votants) :**
+   - Les votants sélectionnent leurs estimations parmi les options prédéfinies (e.g., 1, 2, 3, 5, etc).
+   - Les votes sont soumis en cliquant sur l'avatar correspondant.
+
+3. **Révéler les votes (SM) :**
+   - Le SM révèle les votes et valide la tâche en cas de consensus.
+   - En cas de désaccord, le SM facilite une discussion et réinitialise les votes pour un nouveau tour.
+
+### Progression et fin de session
+1. **Suivi de la progression :**
+   - Le menu backlog affiche les statuts des tâches (e.g., "En cours," "Terminé").
+   - Les difficultés et estimations sont mises à jour dynamiquement.
+
+2. **Clôture de session :**
+   - Une fois toutes les tâches validées, le SM se déconnecte, clôturant ainsi la session.
+
+3. **Sauvegarde et reprise :**
+   - La progression est automatiquement sauvegardée dans un fichier JSON.
+   - Les sessions peuvent être reprises en chargeant le fichier sauvegardé via le menu.
+
+## Structure JSON
+- L'application utilise un fichier JSON structuré pour gérer les tâches et les sessions.
+- Chaque tâche inclut :
+  ```json
+  {
+      "name": "Nom de la tâche",
+      "description": "Description de la tâche",
+      "priority": 1,
+      "difficulty": 5,
+      "status": "En cours",
+      "mode_of_vote": "unanimité",
+      "participants": ["lina", "hugo"]
+  }
+  ```
+
+## Captures d'écran clés
+### Page de connexion
+- Les utilisateurs sélectionnent leurs rôles et se connectent séquentiellement.
+
+### Interface de vote
+- Les participants soumettent leurs votes pour les tâches, visibles uniquement par le SM jusqu'à leur révélation.
+
+### Gestion du backlog
+- Le PO gère les listes de tâches et suit la progression.
+
+### Actions du Scrum Master
+- Initier, révéler, valider ou réinitialiser les votes selon les besoins.
+
+## Intégration CI/CD
+1. **Tests automatisés :**
+   - Les tests des fonctionnalités principales (e.g., connexion, gestion du backlog, vote) sont automatisés avec un fichier yml utilisant le package `pytest`.
+
+2. **Documentation :**
+   - Générée avec Doxygen pour une meilleure clarté du code.
+
+3. **Déploiement :**
+   - Intégré avec GitHub Actions pour une intégration et un déploiement continus.
+
+## Auteurs
+- **Hugo MAURIN**
+- **Lina RHIM**
